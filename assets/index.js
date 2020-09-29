@@ -263,7 +263,7 @@ function timePrintLayout(time){
     return output
 }
 function loadStates(){
-    $.getScript( "/assets/states.js", function() {
+    $.getScript( "assets/states.js", function() {
         console.log(states)
         var list=document.getElementById('stateSelectList')
         for(var i=0; i< states.length; i++)[
