@@ -150,17 +150,14 @@ const timer={
             currentMS = (Date.parse((new Date).toUTCString())-Date.parse(timeStarted.toUTCString()));
         }, 1000)
     },
-    "format": function(duration) {
-        var milliseconds = parseInt((duration % 1000) / 100),
-        seconds = Math.floor((duration / 1000) % 60),
-        minutes = Math.floor((duration / (1000 * 60)) % 60),
-        hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-    
-      hours = (hours < 10) ?  + hours : hours;
-      minutes = (minutes < 10) ? + minutes : minutes;
-      seconds = (seconds < 10) ? + seconds : seconds;
-    
-      return [hours, minutes, seconds];
+    "format": function(ms) {
+        var d, h, m, s;
+        s = Math.floor(ms / 1000);
+        m = Math.floor(s / 60);
+        s = s % 60;
+        h = Math.floor(m / 60);
+        m = m % 60;
+        return [h,m,s];
     },
     "stop": function(){
         view.ended()
@@ -214,7 +211,7 @@ function printLog(){
     printContent('printTable')
     window.print()
 }
-const drivingTips = ["Turn on Do Not Disturb to reduce distractions on the road.", "Try turning off driver assist features to become less dependant on these features.", "Stop driving if you feel tired", "Use the left lane to take the third exit on most double lane roundabouts", "Neighborhoods with no posted speed limits have a speed limit of 25 mph", "Feel free to exit the app. Your timer will stay here."]
+const drivingTips = ["Turn on Do Not Disturb to reduce distractions on the road.", "Try turning off driver assist features to become less dependant on these features.", "Stop driving if you feel tired", "Remember to buckle up!", "Feel free to exit the app. Your timer will stay here."]
 function printContent(el){
 
     }
@@ -225,6 +222,7 @@ function getTotalTime(){
     var log = JSON.parse(localStorage.getItem('drivingLog'))
     for(var i=0;i<log.length;i++){
         totalHours += log[i].ms
+        console.log(totalHours)
         if(log[i].night){
             nightHours += log[i].ms
         }
@@ -240,7 +238,9 @@ function homeData(){
     var allTime = getTotalTime()
     var hours = JSON.parse(localStorage.getItem('hours'))
     if(allTime[0][0] >= hours[0] && allTime[1][0] >= hours[1]){
-        document.getElementById('welcome-text').innerHTML = "You've Finished Your Required Hours!"
+        document.getElementById('welcome-text').innerHTML = "Horray! You're Done!"
+    }else if(allTime[0][0] >= hours[0]){
+        document.getElementById('welcome-text').innerHTML = "You Have "+allTime[1][0]+" Night Hours<br><p style='font-size:14px;' class='text-muted'>Finish up your night hours!</p>"
     }else if(allTime[0][0] != 0){
         document.getElementById('welcome-text').innerHTML = "You've Driven "+allTime[0][0]+" Hours"
     }else if(allTime[0][1] != 0){
@@ -328,3 +328,54 @@ function manualSave(element, night){
     snackbar.open()
     homeData()
 }
+function openShareMenu(){
+    menu.open = true
+    if(navigator.share){
+        menu.items[1].hidden = false
+    }
+}
+function jsShare(){
+    navigator.share({
+        title: "I've driven "+getTotalTime()[0][0]+" student driving hours!",
+        text: "I've driven a total of "+getTotalTime()[0][0]+" hours, including "+getTotalTime()[1][0]+" night hours."
+      })
+}
+function exportData(el){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("drivingLog"));
+    el.outerHTML="<a class='"+el.className+"'>"+el.innerHTML+"</a>"
+    el.setAttribute("href",     dataStr     );
+    el.setAttribute("download", "scene.json");
+    el.click()
+}
+function deleteData(){
+    var confirmed = window.confirm("Are you sure you want to DELETE your log and all other data? This action can't be undone unless you have a backup.")
+    if(confirmed){
+        localStorage.clear()
+        location.reload()
+    }
+}
+let deferredPrompt;
+const installPrompt = {
+    show:function(){
+        document.getElementById('installItem').hidden=false
+    },
+    install: function(){
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+          } else {
+            console.log('User dismissed the install prompt');
+          }
+        });
+    }
+}
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can install the PWA
+    installPrompt.show();
+  });

@@ -5,16 +5,14 @@
   <link rel="manifest" href="manifest.json">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Drive Log">
-  <meta name="theme-color" content="#7DC834"/>
+  <meta name="apple-mobile-web-app-title" content="Driving Log">
+  <meta name="theme-color" content="#344955"/>
   <title>Driving Log</title>
-  <link rel="stylesheet" href="assets/bootstrapcustom.min.css">
   <link href="assets/material.css" rel="stylesheet">
   <script type="text/javascript" src="assets/material.js"></script>
   <link rel="stylesheet" href="assets/style.css">
   <meta name="description" content="A simple driving log for permitted drivers">
   <script type="text/javascript" src="assets/jquery.js"></script>
-  <meta name="color-scheme" content="dark light">
   <script type="text/javascript" src="assets/index.js"></script>
 </body>
 </head>
@@ -23,14 +21,14 @@
   <div class="mdc-top-app-bar__row">
     <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
       <div class="mdc-menu-surface--anchor" id="share">
-      <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" onclick="menu.open = true">share</button>
+      <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" onclick="openShareMenu()">share</button>
       <div class="mdc-menu mdc-menu-surface">
           <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
         <li class="mdc-list-item" role="menuitem">
           <span class="mdc-list-item__ripple"></span>
           <span class="mdc-list-item__text">Export Data</span>
         </li>
-        <li class="mdc-list-item" role="menuitem">
+        <li class="mdc-list-item" role="menuitem" onclick="jsShare()" hidden>
           <span class="mdc-list-item__ripple"></span>
           <span class="mdc-list-item__text">Share</span>
         </li>
@@ -67,13 +65,13 @@
 <div class="mdc-card">
     <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
     <h4><i class="material-icons">nights_stay</i><br> Night Driving</h4>
-    <p id="night-card-text" style="margin-bottom: 0;">Loading...</p>
+    <p id="night-card-text" style="margin-bottom: 0;">...</p>
     <small class="text-muted">Click to Add</small>
     </div>
     <form style="display:none; padding: 16px; padding-top:0;" id="nightForm">
       <hr style="margin-top:0;">
       <h5>Adding Night Hours</h5>
-      <div style="columns: 2; width: 100%;">
+      <div style="display:flex; gap: 1rem;">
         <label class="mdc-text-field mdc-text-field--filled">
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="number" min="0">
@@ -111,7 +109,7 @@
     <form style="display:none; padding: 16px; padding-top:0;" id="dayForm">
       <hr style="margin-top:0;">
       <h5>Adding Total Hours</h5>
-      <div style="columns: 2; width: 100%;">
+      <div style="display:flex; gap: 1rem;">
         <label class="mdc-text-field mdc-text-field--filled">
           <span class="mdc-text-field__ripple"></span>
           <input class="mdc-text-field__input" type="number" min="0">
@@ -308,7 +306,7 @@
   <div style="display:flex">
     <div style="display: inline-block; width: 100%">
       <p class="intro-icon">thumb_up</p>
-      <h4>Easy</h4>
+      <h4>Simple</h4>
     </div>
     <div style="display: inline-block; width: 100%">
       <p class="intro-icon">get_app</p>
@@ -392,17 +390,11 @@
    --></h2>
       <div class="mdc-dialog__content" id="my-dialog-content">
         <ul class="mdc-list mdc-list--two-line mdc-list--icon-list">
-          <li class="mdc-list-item" tabindex="0">
+          <li class="mdc-list-item" tabindex="0" onclick="exportData(this)">
+            <span class="mdc-list-item__ripple"></span>
             <span class="mdc-list-item__text">
               <span class="mdc-list-item__primary-text">Export your Data</span>
               <span class="mdc-list-item__secondary-text">Use this before you clear your cookies or get a new device.</span>
-            </span>
-          </li>
-          <li class="mdc-list-item" tabindex="0">
-            <span class="mdc-list-item__ripple"></span>
-            <span class="mdc-list-item__text">
-              <span class="mdc-list-item__primary-text">Import Data</span>
-              <span class="mdc-list-item__secondary-text">Import the .JSON file from this app</span>
             </span>
           </li>
           <li class="mdc-list-item" tabindex="0">
@@ -412,7 +404,14 @@
               <span class="mdc-list-item__secondary-text">Set a different hour goal</span>
             </span>
           </li>
-          <li class="mdc-list-item" tabindex="0">
+          <li class="mdc-list-item" tabindex="0" id="installItem" hidden onclick="installPrompt.install()">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__text">
+              <span class="mdc-list-item__primary-text">Install App</span>
+              <span class="mdc-list-item__secondary-text">Install this app and add it to your home screen</span>
+            </span>
+          </li>
+          <li class="mdc-list-item" tabindex="0" onclick="deleteData()">
             <span class="mdc-list-item__ripple"></span>
             <span class="mdc-list-item__text">
               <span class="mdc-list-item__primary-text">Delete all Data</span>
@@ -471,4 +470,20 @@ var manualFields = {"night": [].map.call(document.getElementById('nightForm').qu
   return new mdc.textField.MDCTextField(el);
 })}
 var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar'));
+//service worker for Progressive Web App mode
+window.addEventListener('beforeinstallprompt', (event) => {
+  console.log('👍', 'beforeinstallprompt', event);
+  window.deferredPrompt = event;
+});
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      // registration failed D:
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 </script>

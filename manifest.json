@@ -1,0 +1,22 @@
+{
+    "short_name": "Drive Log",
+    "name": "Driving Log",
+    "description": "Track student driving hours easily.",
+    "icons": [
+      {
+        "src": "assets/icons/icon_192.png",
+        "type": "image/png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "assets/icons/icon_512.png",
+        "type": "image/png",
+        "sizes": "512x512"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#000000",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#344955"
+  }
