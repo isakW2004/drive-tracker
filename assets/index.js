@@ -11,7 +11,7 @@ $('#homeContainer').ready(function(){
     if(localStorage.getItem("timerStartTime")!= null){
         timeStarted = new Date(localStorage.getItem("timerStartTime"))
         currentMS =  (Date.parse((new Date).toUTCString())-Date.parse(timeStarted.toUTCString()))
-        view.timer(false, true)
+        view.timer(localStorage.getItem('timerNight'), true)
     }
 })
 var timeStarted;
@@ -36,11 +36,13 @@ const view = {
         if(timeChips.selectedChipIds.indexOf(predictedTime) == -1){
             document.getElementById(predictedTime).click()
         }
+        document.getElementById('printButton').hidden = true;
         standardFab.onclick = function(){
             view.timer(timeChips.selectedChipIds.indexOf('night') != -1, false)
         }
         setTimeout(function(){
             homeContainer.hidden=true
+            homeContainer.classList.remove('disappearing')
         }, 300)
     },
     "timer": function(night, continued){
@@ -52,6 +54,8 @@ const view = {
         timerContainer.classList.add('appearing')
         timerContainer.hidden=false
         document.getElementById('share').hidden = true;
+        document.getElementById('printButton').hidden = true;
+        document.getElementById('speedButton').hidden = false;
         document.getElementById('closeButton').hidden = false;
         standardFab.classList.add('mdc-fab--exited')
         document.getElementById('stopFab').classList.remove('mdc-fab--exited')
@@ -62,7 +66,10 @@ const view = {
             homeContainer.hidden=true;
         }, 300)
         if(night){
+            localStorage.setItem('timerNight', true);
             document.querySelector('html').classList.add("night")
+        }else{
+            localStorage.setItem('timerNight', false);
         }
     },
     "ended": function(){
@@ -72,6 +79,8 @@ const view = {
         endContainer.classList.add('appearing')
         timerContainer.classList.add('disappearing')
         endContainer.hidden=false
+        document.getElementById('printButton').hidden = true;
+        document.getElementById('speedButton').hidden = true;
         standardFab.classList.remove('mdc-fab--exited')
         fabIcon.innerHTML="save"
         standardFab.onclick=function(){
@@ -90,6 +99,8 @@ const view = {
         homeContainer.classList.add('appearing')
         homeContainer.classList.remove('disappearing')
         homeContainer.hidden=false;
+        document.getElementById('printButton').hidden = false;
+        document.getElementById('speedButton').hidden = true;
         document.getElementById('share').hidden = false;
         document.getElementById('closeButton').hidden = true;
         $('.container').each(function() {
@@ -342,10 +353,8 @@ function jsShare(){
 }
 function exportData(el){
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("drivingLog"));
-    el.outerHTML="<a class='"+el.className+"'>"+el.innerHTML+"</a>"
     el.setAttribute("href",     dataStr     );
-    el.setAttribute("download", "scene.json");
-    el.click()
+    el.setAttribute("download", "drivingLog.json");
 }
 function deleteData(){
     var confirmed = window.confirm("Are you sure you want to DELETE your log and all other data? This action can't be undone unless you have a backup.")
@@ -379,3 +388,55 @@ window.addEventListener('beforeinstallprompt', (e) => {
     // Update UI notify the user they can install the PWA
     installPrompt.show();
   });
+  var goalSetter;
+  var newInputs;
+  function setNewGoal(){
+    if(document.getElementById('newGoalSetter') == null){
+        var dialog = document.getElementById('newGoalSetterWrapper')
+        dialog.innerHTML += '<div class="mdc-dialog" id="newGoalSetter"><div class="mdc-dialog__container"><div class="mdc-dialog__surface" role="alertdialog" aria-modal="true"><div class="mdc-dialog__content" id="my-dialog-content"> Setting a New Hour Goal<br><div class="setuprow"> <label class="mdc-text-field mdc-text-field--filled hour-input"> <span class="mdc-text-field__ripple"></span> <input class="mdc-text-field__input" type="number"> <span class="mdc-floating-label" id="my-label-id">Total Hours</span> <span class="mdc-line-ripple"></span> </label> <label class="mdc-text-field mdc-text-field--filled hour-input"> <span class="mdc-text-field__ripple"></span> <input class="mdc-text-field__input" type="number"> <span class="mdc-floating-label" id="my-label-id">Night Hours</span> <span class="mdc-line-ripple"></span> </label></div></div><div class="mdc-dialog__actions"> <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel"><div class="mdc-button__ripple"></div> <span class="mdc-button__label">Cancel</span> </button> <button type="button" class="mdc-button mdc-button--raised mdc-dialog__button" onclick="saveNewHours()" data-mdc-dialog-action="exit"><div class="mdc-button__ripple"></div> <span class="mdc-button__label">Save</span> </button></div></div></div><div class="mdc-dialog__scrim"></div></div>'
+        goalSetter = new mdc.dialog.MDCDialog(document.getElementById('newGoalSetter'));
+        newInputs = [].map.call(dialog.querySelectorAll('.hour-input'), function(el) {
+            return new mdc.textField.MDCTextField(el);
+          });
+    }
+    settings.close()
+    goalSetter.open()
+  }
+  const readoutUnits = {
+    mph: 2.23694,
+    kmh: 3.6
+  };
+  var speedWatch;
+ const speedometer = {
+     start: function(){
+        const options = {
+            enableHighAccuracy: true
+          };
+        console.log('Starting Speedometer')
+        document.getElementById('speedometer').innerHTML="<hr><h4>Speedometer</h4><p class='text-muted'>Speed is estimated</p><h1 id='speed'>...</h1><h5>mph</h5>"
+        document.getElementById('speedometer').hidden = false;
+        speedWatch= navigator.geolocation.watchPosition(speedometer._update, null, options);
+        document.getElementById('speedButton').onclick= function(){
+            speedometer.stop()
+        }
+     },
+     stop: function(){
+        document.getElementById('speedometer').hidden = true;
+        navigator.geolocation.clearWatch(speedWatch);
+        document.getElementById('speedButton').onclick= function(){
+            speedometer.start()
+        }
+     },
+     _update: function(position){
+        document.getElementById('speed').textContent = Math.round(
+            position.coords.speed * readoutUnits.mph);
+     }
+ }
+
+function saveNewHours(){
+    var save= [];
+    save.push(newInputs[0].value)
+    save.push(newInputs[1].value)
+    localStorage.setItem('hours', JSON.stringify(save))
+    homeData()
+}
