@@ -12,7 +12,8 @@ var urlsToCache = [
   'assets/icons.woff2',
   'assets/hex.svg',
   'assets/bootstrapcustom.min.css',
-  'assets/icons/roundabout.svg'
+  'assets/icons/roundabout.svg',
+  'assets/nosleep.js'
 ];
 
 self.addEventListener('install', function(event) {

@@ -101,6 +101,10 @@ main{
 }
 .stop-fab{
     background: none !important;
+    border-radius: 0 !important;
+    width: 60px;
+    height: 60px;
+    box-shadow: none;
 }
 .container.disappearing{
     animation-name: disappear;
@@ -132,8 +136,17 @@ main{
     color: var(--mdc-theme-secondary)
 }
 .stop-fab svg{
-    width: 100%;
-    height: 100%;
+    width: 60px;
+    height: 60px;
+    overflow: visible;
+    -webkit-filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0,0,0,.12));
+    filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2)) drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.14)) drop-shadow(0px 1px 18px rgba(0,0,0,.12));
+}
+.stop-fab:hover{
+  box-shadow: none;
+}
+.stop-fab:active{
+  box-shadow: none;
 }
 .time{
     font-size: 75px;

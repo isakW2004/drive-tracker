@@ -14,33 +14,81 @@
     <script type="text/javascript" src="assets/index.js"></script>
 </head>
 <div class="hero">
+  <div>
+    <img class="icon" src="assets/icons/icon_512.png">
     <h1>Driving Log</h1>
+    <p>An easy way to log hours for student drivers</p>
+  </div>
     <img src="assets/pixel.png">
 </div><br>
 <div class="container text-center">
-<h1>Features</h1>
-<div style="display:flex; flex-direction: row; justify-content: center;">
-    <div style="display: inline-block;">
+<h1>Why Drive Tracker?</h1>
+<div class="icon-row">
+    <div style="padding: 10px; width: 100%;">
       <p class="intro-icon">thumb_up</p>
       <h4>Easy to Use</h4>
       <p>Focus on driving with an easy to use UI that and no signing in.</p>
     </div>
-    <div style="display: inline-block;">
+    <div style="padding: 10px; width: 100%;">
       <p class="intro-icon">get_app</p>
       <h4>Installable</h4>
       <p>Add the app to your devices home screen to use it as an app. And it works offline!</p>
     </div>
-    <div style="display: inline-block;">
+    <div style="padding: 10px; width: 100%;">
         <p class="intro-icon">money_off</p>
         <h4>100% Free</h4>
         <p>No ads, no tracking. The code is also open source!</p>
       </div>
-    <div style="display: inline-block;">
+    <div style="padding: 10px; width: 100%;">
       <p class="intro-icon">print</p>
       <h4>Printable</h4>
       <p>Print your log to submit it to the DMV.</p>
     </div>
   </div>
+  <h1>More Features</h1>
+<div class="icon-row">
+  <div style="padding: 10px; width: 100%;">
+    <p class="intro-icon">share</p>
+    <h4>Share Your Hours</h4>
+  </div>
+  <div style="padding: 10px; width: 100%;">
+    <p class="intro-icon">launch</p>
+    <h4>Export as JSON</h4>
+  </div>
+  <div style="padding: 10px; width: 100%;">
+      <p class="intro-icon">speed</p>
+      <h4>Speedometer</h4>
+    </div>
+  <div style="padding: 10px; width: 100%;">
+    <p class="intro-icon">check_circle</p>
+    <h4>Skills</h4>
+  </div>
+</div>
+<hr>
+<h1>Help</h1>
+<div class="icon-row help-row" id="help">
+  <div>
+  <h5>How do I install this app?</h5>
+  <p>To install this app, follow the directions for your browser.<br><br>For Safari on iOS, press the "share" icon on the toolbar at the top. Scroll through the bottom row of the popup until you find "Add to Home Screen".<br><br>For Chrome, Chromium Browsers, or Firefox, press the settings icon on the bottom right of the drive tracker app. If you see "Install App" drive tracker can be installed click "Install App" and you will be prompted to add the app to your home screen.<br><br>The app is now available offline</p>
+  </div>
+  <div>
+    <h5>Who uses this app?</h5>
+    <p>This app is designed to be on either the student phone or the parent phone. It's designed to be not distracting for student phones, and has helpful features like a speedometer for a parent phone. </p>
+    </div>
+    <div>
+      <h5>How do I print the log?</h5>
+      <p>Press the print button at the bottom of the screen. A print dialog will appear. On iOS, only Airprint printers are supported.</p>
+    </div>
+    <div>
+      <h5>I have issues with the app.</h5>
+      <p>You can submit issues or even fix them yourself here. This app is a one person project created by an actual student driver, so don't expect a speedy response.</p>
+      <a href="https://github.com/isakW2004/drive-tracker">GitHub Repo</a>
+    </div>
+    <div>
+      <h5>What if I get a new phone?</h5>
+      <p>If you get a new phone, your data might not be transferred to the new device. Be sure to export your data in settings and send the file you downloaded to your new phone. On the new device, on the setup screen for driving log, press the import data option at the bottom of the screen.</p>
+    </div>
+</div>
 </div>
 <style>
     .hero{
@@ -52,19 +100,21 @@
         border-radius: 0 0 90px 0px;
         background-color: #344955;
         color:white;
-        margin-bottom: 130px;
+        margin-bottom: 200px;
     }
     .hero h1{
         font-weight: bold;
         font-size: 3rem;
-        position: relative;
+    }
+    .hero div{
+      position: relative;
     }
     @media only screen and (min-width: 600px) {
         .hero{
             padding-top: 40px;
             align-content: center;
         }
-        .hero img{
+        .hero img:not(.icon){
         height: 100%;
         align-self: right;
         position: absolute;
@@ -80,11 +130,11 @@
             text-align:center;
             flex-wrap: wrap;
         }
-        .hero img{
+        .hero img:not(.icon){
             position: absolute;
             height: auto;
             width: 250px;
-            bottom: 100px;
+            bottom: 15px;
 
         }
     }
@@ -98,6 +148,11 @@
     src: url(assets/icons.woff2) format('woff2');
   }
   
+  @media only screen and (max-width: 600px) and (max-height: 690px) {
+    .hero img:not(.icon){
+      display: none;
+    }
+  }
   .material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
@@ -106,7 +161,7 @@
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
-    display: inline-block;
+    padding: 10px;
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
@@ -119,5 +174,24 @@
     font-size: 70px;
     font-family: 'Material Icons';
     margin-bottom: 0px;
+}
+.icon-row{
+  display:inline-grid;
+  width: 100%;
+}
+@media only screen and (min-width: 700px){
+  .icon-row{
+  grid-template-columns: 25% 25% 25% 25%;
+  }
+}
+.help-row{
+  text-align: left;
+}
+.icon-row>*{
+  padding: 15px;
+}
+.icon{
+  width: 100px;
+  height: 100px;
 }
 </style>

@@ -11,7 +11,7 @@ $('#homeContainer').ready(function(){
     if(localStorage.getItem("timerStartTime")!= null){
         timeStarted = new Date(localStorage.getItem("timerStartTime"))
         currentMS =  (Date.parse((new Date).toUTCString())-Date.parse(timeStarted.toUTCString()))
-        view.timer(localStorage.getItem('timerNight'), true)
+        view.timer((localStorage.getItem('timerNight')==="true"), true)
     }
 })
 var timeStarted;
@@ -175,6 +175,8 @@ const timer={
         var endTime = currentTime;
         document.getElementById('endTime').innerHTML = timePrintLayout(endTime).join(':')
         localStorage.removeItem("timerStartTime")
+        localStorage.removeItem("timerNight")
+        speedometer.stop()
     },
     "save": function(){
         var endContainer = document.getElementById('endContainer')
@@ -233,7 +235,6 @@ function getTotalTime(){
     var log = JSON.parse(localStorage.getItem('drivingLog'))
     for(var i=0;i<log.length;i++){
         totalHours += log[i].ms
-        console.log(totalHours)
         if(log[i].night){
             nightHours += log[i].ms
         }
@@ -306,7 +307,6 @@ function manualSave(element, night){
     }else{
         var type="day"
     }
-    console.log()
     for(var i=0; i<manualFields[type].length; i++){
         var field = manualFields[type][i]
         if(field.valid){
@@ -407,6 +407,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     kmh: 3.6
   };
   var speedWatch;
+  var currentUnit = 'kmh';
  const speedometer = {
      start: function(){
         const options = {
@@ -419,6 +420,19 @@ window.addEventListener('beforeinstallprompt', (e) => {
         document.getElementById('speedButton').onclick= function(){
             speedometer.stop()
         }
+        if(!speedometer.noSleepLoaded){
+            $.getScript( "assets/nosleep.js", function() {
+                speedometer.noSleep= new NoSleep() 
+                console.log("NoSleep is Ready")
+                speedometer.noSleep.enable()
+                speedometer.noSleepLoaded = true
+              });
+        }else{
+            speedometer.noSleep.enable()
+        }
+
+        
+        speedometer.started=false;
      },
      stop: function(){
         document.getElementById('speedometer').hidden = true;
@@ -426,11 +440,16 @@ window.addEventListener('beforeinstallprompt', (e) => {
         document.getElementById('speedButton').onclick= function(){
             speedometer.start()
         }
+        speedometer.started= false
+        speedometer.noSleep.disable()
      },
      _update: function(position){
         document.getElementById('speed').textContent = Math.round(
-            position.coords.speed * readoutUnits.mph);
-     }
+            position.coords.speed * readoutUnits[currentUnit]);
+     },
+     started: false,
+     noSleepLoaded: false,
+     noSleep: null
  }
 
 function saveNewHours(){
@@ -439,4 +458,31 @@ function saveNewHours(){
     save.push(newInputs[1].value)
     localStorage.setItem('hours', JSON.stringify(save))
     homeData()
+}
+var importJSON;
+function importData(){
+    if(document.getElementById('importJSON') == null){
+        var dialog = document.getElementById('importJSONWrapper')
+        dialog.innerHTML += '<div class="mdc-dialog" id="importJSON"><div class="mdc-dialog__container"><div class="mdc-dialog__surface" role="alertdialog" aria-modal="true"><div class="mdc-dialog__content" id="my-dialog-content"> Importing Data<br><p>Upload the drivingLog.json that you downloaded when you exported your data.</p><br><input type="file" accept="application/json" id="importInput"></div><div class="mdc-dialog__actions"> <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel"><div class="mdc-button__ripple"></div> <span class="mdc-button__label">Cancel</span> </button> <button type="button" class="mdc-button mdc-button--raised mdc-dialog__button" onclick="importUploaded()" disabled data-mdc-dialog-action="exit"><div class="mdc-button__ripple"></div> <span class="mdc-button__label">Import</span> </button></div></div></div><div class="mdc-dialog__scrim"></div></div>'
+        importJSON = new mdc.dialog.MDCDialog(document.getElementById('importJSON'));
+        document.getElementById('importInput').addEventListener("change", function(){
+            if(document.getElementById('importInput').files[0].type == 'application/json'){
+                importJSON.root.querySelector('.mdc-button--raised').disabled= false;
+            }else{
+                window.alert("This isn't a JSON driving log.")
+                importJSON.root.querySelector('.mdc-button--raised').disabled= true;
+            }
+        })
+    }
+    importJSON.open()
+}
+function importUploaded(){
+    var log;
+    const objectURL = window.URL.createObjectURL(document.getElementById('importInput').files[0]);
+    $.getJSON( objectURL, function( data ) {
+        log = data;
+        localStorage.setItem('drivingLog', JSON.stringify(log))
+        snackbar.labelText = "Your log has been uploaded. Put in your hours to finish setup"
+        snackbar.open()
+    });
 }
