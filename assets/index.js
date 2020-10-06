@@ -250,7 +250,7 @@ function homeData(){
     var allTime = getTotalTime()
     var hours = JSON.parse(localStorage.getItem('hours'))
     if(allTime[0][0] >= hours[0] && allTime[1][0] >= hours[1]){
-        document.getElementById('welcome-text').innerHTML = "Horray! You're Done!"
+        document.getElementById('welcome-text').innerHTML = "You've finished your hours!"
     }else if(allTime[0][0] >= hours[0]){
         document.getElementById('welcome-text').innerHTML = "You Have "+allTime[1][0]+" Night Hours<br><p style='font-size:14px;' class='text-muted'>Finish up your night hours!</p>"
     }else if(allTime[0][0] != 0){
@@ -367,6 +367,8 @@ let deferredPrompt;
 const installPrompt = {
     show:function(){
         document.getElementById('installItem').hidden=false
+        snackbar.labelText = "Want to install the app? Open Settings"
+        snackbar.open()
     },
     install: function(){
         deferredPrompt.prompt();
@@ -381,11 +383,8 @@ const installPrompt = {
     }
 }
 window.addEventListener('beforeinstallprompt', (e) => {
-    // Prevent the mini-infobar from appearing on mobile
     e.preventDefault();
-    // Stash the event so it can be triggered later.
     deferredPrompt = e;
-    // Update UI notify the user they can install the PWA
     installPrompt.show();
   });
   var goalSetter;
@@ -413,8 +412,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
         const options = {
             enableHighAccuracy: true
           };
+        if(navigator.language.split('-')[1]=="US"){
+            currentUnit="mph"
+        }
         console.log('Starting Speedometer')
-        document.getElementById('speedometer').innerHTML="<hr><h4>Speedometer</h4><p class='text-muted'>Speed is estimated</p><h1 id='speed'>...</h1><h5>mph</h5>"
+        document.getElementById('speedometer').innerHTML="<hr><h4>Speedometer</h4><p class='text-muted'>Speed is estimated</p><h1 id='speed'>...</h1><h5>"+currentUnit+"</h5>"
+        document.getElementById('speedometer').innerHTML+= "<span><small><u onclick='speedometer.switchUnits(this)'>Switch to "+((currentUnit == "mph") ? "km/h" : "mph")+ "</u></small></span>"
         document.getElementById('speedometer').hidden = false;
         speedWatch= navigator.geolocation.watchPosition(speedometer._update, null, options);
         document.getElementById('speedButton').onclick= function(){
@@ -430,9 +433,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
         }else{
             speedometer.noSleep.enable()
         }
-
-        
-        speedometer.started=false;
+        speedometer.started=true;
      },
      stop: function(){
         document.getElementById('speedometer').hidden = true;
@@ -449,7 +450,13 @@ window.addEventListener('beforeinstallprompt', (e) => {
      },
      started: false,
      noSleepLoaded: false,
-     noSleep: null
+     noSleep: null,
+     switchUnits: function(text){
+        currentUnit = ((currentUnit == "mph") ? "kmh" : "mph");
+        document.getElementById('speedometer').querySelector('h5').innerHTML = currentUnit;
+        text.innerHTML = "Switch to "+ ((currentUnit == "mph") ? "km/h" : "mph")
+        document.getElementById('speed').innerHTML="..."
+     }
  }
 
 function saveNewHours(){
