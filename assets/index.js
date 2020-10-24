@@ -16,6 +16,7 @@ $('#homeContainer').ready(function(){
     if(installPrompt._iOS()){
         installPrompt.show(true)
     }
+    _generateSkillChips()
 
 })
 var timeStarted;
@@ -71,13 +72,17 @@ const view = {
         }, 300)
         if(night){
             localStorage.setItem('timerNight', true);
+            if(localStorage.getItem('darkMode') != "true"){
             document.querySelector('html').classList.add("night")
+            }
         }else{
             localStorage.setItem('timerNight', false);
         }
     },
     "ended": function(){
+        if(localStorage.getItem('darkMode') != "true"){
         document.querySelector('html').classList.remove('night')
+        }
         var timerContainer = document.getElementById('timerContainer')
         var endContainer = document.getElementById('endContainer')
         endContainer.classList.add('appearing')
@@ -143,6 +148,16 @@ const view = {
         }
     }
 }
+
+const skills = [
+    {id:"construction", icon:"construction", name:"Construction"},
+    {id:"parking", icon:"local_parking", name:"Parking"},
+    {id:"roundabouts", icon:"cached", name:"Roundabouts"},
+    {id:"highways", icon:"speed", name:"Highways"},
+    {id:"city", icon:"traffic", name:"City Driving"},
+    {id:"winter", icon:"ac_unit", name:"Winter Driving"}
+]
+
 const timer={
     "start":function(continued){
         var html = document.getElementById("timer")
@@ -269,6 +284,39 @@ function homeData(){
     document.getElementById('night-card-text').innerHTML = allTime[1][0]+"/"+hours[1]+" Hours Completed"
     document.getElementById('general-card-text').innerHTML = allTime[0][0]+"/"+hours[0]+" Hours Completed"
     document.getElementById('welcome-text').innerHTML += '<p style="font-size:1rem">Press <i class="material-icons align-bottom">timer</i> to start a drive</p>'
+    //skills card
+    if(localStorage.getItem('drivingLog') != null){
+    var log= JSON.parse(localStorage.getItem('drivingLog'))
+    var skillCount = new Object
+    var skillsPracticed=0;
+    for(var i=0;i<log.length;i++){
+        var currentSkills = log[i].skills
+        for(var rep=0;rep<currentSkills.length;rep++){
+            if(!skillCount[log[i].skills[rep]]){
+                skillCount[log[i].skills[rep]] = 0
+            }
+            skillCount[log[i].skills[rep]]++
+            if(skillCount[log[i].skills[rep]] === 3){
+                skillsPracticed++
+            }
+        }
+    }
+    document.getElementById('skill-card-text').innerHTML = skillsPracticed+"/"+skills.length+" Skills Practiced"
+    document.getElementById('skillList').innerHTML = ''
+    for(var i=0; i<skills.length;i++){
+        if(skillCount[skills[i].id]){
+            document.getElementById('skillList').innerHTML+= '<li class="mdc-list-item" tabindex="0"> <span class="mdc-list-item__ripple"></span> <span class="mdc-list-item__graphic material-icons" aria-hidden="true">'+skills[i].icon+'</span><span class="mdc-list-item__text"><span class="mdc-list-item__primary-text">'+skills[i].name+'</span> <span class="mdc-list-item__secondary-text">Practiced '+skillCount[skills[i].id]+' Times</span></span></li>'
+        }else{
+            document.getElementById('skillList').innerHTML+= '<li class="mdc-list-item" tabindex="0"> <span class="mdc-list-item__ripple"></span> <span class="mdc-list-item__graphic material-icons" aria-hidden="true">'+skills[i].icon+'</span><span class="mdc-list-item__text"><span class="mdc-list-item__primary-text">'+skills[i].name+'</span> <span class="mdc-list-item__secondary-text">Never Practiced</span></span></li>'
+        }
+    }
+}else{
+    document.getElementById('skill-card-text').innerHTML = "0/"+skills.length+" Skills Practiced"
+    document.getElementById('skillList').innerHTML = ''
+    for(var i=0; i<skills.length;i++){
+        document.getElementById('skillList').innerHTML+= '<li class="mdc-list-item" tabindex="0"> <span class="mdc-list-item__ripple"></span> <span class="mdc-list-item__graphic material-icons" aria-hidden="true">'+skills[i].icon+'</span><span class="mdc-list-item__text"><span class="mdc-list-item__primary-text">'+skills[i].name+'</span> <span class="mdc-list-item__secondary-text">Never Practiced</span></span></li>'
+    }
+}
 }
 function timePrintLayout(time){
     var output= [];
@@ -289,7 +337,7 @@ function loadStates(){
 }
 function expandCard(element){
     $header = $(element);
-    $comments = $header.contents('form')
+    $comments = $header.contents('.expandable')
     $comments.slideToggle(200, function () {
         //execute this after slideToggle is done
         //change text of header based on visibility of content div
@@ -356,9 +404,30 @@ function jsShare(){
       })
 }
 function exportData(el){
-    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("drivingLog"));
-    el.setAttribute("href",     dataStr     );
-    el.setAttribute("download", "drivingLog.json");
+    if(localStorage.getItem('drivingLog')!== null){
+    function fallback(){
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(localStorage.getItem("drivingLog"));
+        el.setAttribute("href",     dataStr     );
+        el.setAttribute("download", "drivingLog.json");
+    }
+    if(['iPad','iPhone','iPod'].includes(navigator.platform) && navigator.clipboard){
+        navigator.clipboard.writeText(localStorage.getItem("drivingLog")).then(function(){
+            snackbar.labelText = "Your driving log was copied to your clipboard. Save it in the notes app."
+            snackbar.actionEl_.hidden=false
+            snackbar.open()
+            setTimeout(function(){
+                snackbar.actionEl_.hidden=true
+            }, (snackbar.timeoutMs + 1000))
+        }).catch(function(){
+            fallback()
+        })
+    }else{
+        fallback()
+        console.log('Not a iOS device with iOS 13.4 or later')
+    }
+    }
+    snackbar.labelText = "You cant export a log with nothing on it."
+    snackbar.open()
 }
 function deleteData(){
     var confirmed = window.confirm("Are you sure you want to DELETE your log and all other data? This action can't be undone unless you have a backup.")
@@ -455,7 +524,9 @@ window.addEventListener('beforeinstallprompt', (e) => {
             speedometer.start()
         }
         speedometer.started= false
-        speedometer.noSleep.disable()
+        if(speedometer.noSleep != null){
+         speedometer.noSleep.disable()
+        }
      },
      _update: function(position){
         document.getElementById('speed').textContent = Math.round(
@@ -479,31 +550,26 @@ function saveNewHours(){
     localStorage.setItem('hours', JSON.stringify(save))
     homeData()
 }
-var importJSON;
-function importData(){
-    if(document.getElementById('importJSON') == null){
-        var dialog = document.getElementById('importJSONWrapper')
-        dialog.innerHTML += '<div class="mdc-dialog" id="importJSON"><div class="mdc-dialog__container"><div class="mdc-dialog__surface" role="alertdialog" aria-modal="true"><div class="mdc-dialog__content" id="my-dialog-content"> Importing Data<br><p>Upload the drivingLog.json that you downloaded when you exported your data.</p><br><input type="file" accept="application/json" id="importInput"></div><div class="mdc-dialog__actions"> <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel"><div class="mdc-button__ripple"></div> <span class="mdc-button__label">Cancel</span> </button> <button type="button" class="mdc-button mdc-button--raised mdc-dialog__button" onclick="importUploaded()" disabled data-mdc-dialog-action="exit"><div class="mdc-button__ripple"></div> <span class="mdc-button__label">Import</span> </button></div></div></div><div class="mdc-dialog__scrim"></div></div>'
-        importJSON = new mdc.dialog.MDCDialog(document.getElementById('importJSON'));
-        document.getElementById('importInput').addEventListener("change", function(){
-            if(document.getElementById('importInput').files[0].type == 'application/json'){
-                importJSON.root.querySelector('.mdc-button--raised').disabled= false;
-            }else{
-                window.alert("This isn't a JSON driving log.")
-                importJSON.root.querySelector('.mdc-button--raised').disabled= true;
-            }
-        })
-    }
-    importJSON.open()
-}
-function importUploaded(){
-    var log;
-    const objectURL = window.URL.createObjectURL(document.getElementById('importInput').files[0]);
-    $.getJSON( objectURL, function( data ) {
-        log = data;
-        localStorage.setItem('drivingLog', JSON.stringify(log))
-        snackbar.labelText = "Your log has been uploaded. Put in your hours to finish setup"
-        snackbar.open()
-    });
-}
   
+function toggleAlwaysNight(){
+    if(localStorage.getItem("darkMode")=="true"){
+        localStorage.setItem("darkMode", "false")
+        darkModeSwitch.checked = false
+        document.querySelector('html').classList.remove('night')
+    }else{
+        localStorage.setItem("darkMode", "true")
+        darkModeSwitch.checked = true
+        document.querySelector('html').classList.add('night')
+    }
+}
+
+function _generateSkillChips(){
+    for(var i=0; i<skills.length;i++){
+        const chipEl = document.createElement('div');
+        chipEl.classList.add('mdc-chip')
+        chipEl.id = skills[i].id
+        chipEl.innerHTML = '<div class="mdc-chip__ripple"></div> <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">'+skills[i].icon+'</i> <span class="mdc-chip__checkmark" > <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30"> <path class="mdc-chip__checkmark-path" fill="none" stroke="black" d="M1.73,12.91 8.1,19.28 22.79,4.59"/> </svg> </span> <span role="gridcell"> <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action"> <span class="mdc-chip__text">'+skills[i].name+'</span> </span> </span>'
+        hazardChips.root.appendChild(chipEl);
+        hazardChips.addChip(chipEl);
+    }
+}

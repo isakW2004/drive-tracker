@@ -15,6 +15,17 @@
   <script type="text/javascript" src="assets/jquery.js"></script>
   <script type="text/javascript" src="assets/index.js"></script>
   <link rel="apple-touch-icon" href="assets/icons/icon_ios_512.png">
+  <link href="splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+<link href="splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+<link href="splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+<link href="splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+<link href="splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+<link href="splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
+<link href="splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+<link href="splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+<link href="splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+<link href="splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+
 </body>
 </head>
 <html>
@@ -63,14 +74,13 @@
 <div class="container text-center" id="homeContainer">
 <h1 class="welcome" id="welcome-text"></h1>
 <div class="mdc-card-columns text-center">
-<div class="card-modal-scrim">
 <div class="mdc-card">
     <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
     <h4><i class="material-icons">nights_stay</i><br> Night Driving</h4>
     <p id="night-card-text" style="margin-bottom: 0;">...</p>
     <small class="text-muted">Click to Add</small>
     </div>
-    <form style="display:none; padding: 16px; padding-top:0;" id="nightForm">
+    <form style="display:none; padding: 16px; padding-top:0;" id="nightForm" class="expandable">
       <hr style="margin-top:0;">
       <h5>Adding Night Hours</h5>
       <div class="hourrow">
@@ -101,14 +111,13 @@
       <small class="message"></small>
     </form>
 </div>
-</div>
 <div class="mdc-card">
     <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
     <h4><i class="material-icons">wb_sunny</i><br> Total Driving</h4>
     <p id="general-card-text" style="margin-bottom: 0;">Loading...</p>
     <small class="text-muted">Click to Add</small>
     </div>
-    <form style="display:none; padding: 16px; padding-top:0;" id="dayForm">
+    <form style="display:none; padding: 16px; padding-top:0;" id="dayForm" class="expandable">
       <hr style="margin-top:0;">
       <h5>Adding Total Hours</h5>
       <div class="hourrow">
@@ -137,6 +146,16 @@
       </button>
       <small class="message"></small>
     </form>
+</div>
+<div class="mdc-card">
+  <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
+  <h4><i class="material-icons">auto_awesome</i><br> Skills</h4>
+  <p style="margin-bottom: 0;" id="skill-card-text">Loading...</p>
+  <small class="text-muted">Click for More Info</small>
+  </div>
+  <ul style="display:none; padding: 16px; padding-top:0;" class="expandable mdc-list" id="skillList">
+    
+  </ul>
 </div>
 </div>
 <div class="mdc-data-table" id="printTable" hidden>
@@ -186,7 +205,7 @@
   <h1 class="time" id="timer">00:00:00</h1><br>
   <div class="text-muted">
   <i class="material-icons">info</i><br>
-  <i id="tip">Turn on Do Not Disturb While Driving in your phone's settings to reduce distractions</i></div>
+  <i id="tip">...</i></div>
   <div id="speedometer" hidden></div>
 </div>
 <div class="container text-center" hidden id="endContainer"><br>
@@ -194,102 +213,6 @@
   <h1 class="time" id="endTime">00:00:00</h1><hr>
   <h5>What skills did you work on?</h5>
   <div class="mdc-chip-set mdc-chip-set--filter" id="hazards" role="grid">
-  <div class="mdc-chip" id="construction" role="row">
-    <div class="mdc-chip__ripple"></div>
-    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">construction</i>
-    <span class="mdc-chip__checkmark" >
-      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-      </svg>
-    </span>
-    <span role="gridcell">
-      <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
-        <span class="mdc-chip__text">Construction</span>
-      </span>
-    </span>
-  </div>
-
-  <div class="mdc-chip" id="parking" role="row">
-    <div class="mdc-chip__ripple"></div>
-    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">local_parking</i>
-    <span class="mdc-chip__checkmark" >
-      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-      </svg>
-    </span>
-    <span role="gridcell">
-      <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
-        <span class="mdc-chip__text">Parking</span>
-      </span>
-    </span>
-  </div>
-  <div class="mdc-chip" id="roundabouts" role="row">
-    <div class="mdc-chip__ripple"></div>
-    <i class="mdc-chip__icon mdc-chip__icon--leading"><svg>
-  <g id="roundabout">
-    <path d="M8.876,1.85 L9.188,1.885 L11.841,2.184 L12.357,2.242 L11.99,2.609 L11.61,2.989 L14.935,6.318 C16.118,7.153 16.855,8.417 17.131,9.824 L18.089,8.866 L17.67,8.447 L17.303,8.08 L17.819,8.022 L20.472,7.723 L20.784,7.688 L20.748,8 L20.449,10.653 L20.391,11.169 L20.024,10.801 L19.62,10.397 L16.051,13.966 C15.256,14.835 14.276,15.478 13.115,15.701 L13.115,18.987 L10.953,18.987 L10.95,18.74 L10.916,15.449 L10.916,13.368 L11.262,13.514 C11.581,13.648 11.507,13.619 11.532,13.621 C11.513,13.619 11.829,13.637 12.066,13.662 C13.738,13.662 15.093,12.306 15.093,10.634 C15.093,8.963 13.738,7.607 12.076,7.607 C11.132,7.644 10.547,8.064 9.335,9.349 L9.307,9.329 L9.326,9.351 C8.59,10.01 8.59,10.01 8.347,10.227 C8.111,10.438 8.111,10.438 7.421,11.054 L5.944,12.531 L6.697,13.283 L6.181,13.342 L3.528,13.641 L3.216,13.676 L3.252,13.364 L3.551,10.711 L3.609,10.195 L4.414,11 L7.957,7.458 C8.754,6.459 9.892,5.822 11.139,5.58 L10.079,4.52 L9.636,4.963 L9.269,5.33 L9.211,4.814 L8.911,2.161 L8.876,1.85 z"/>
-  </g>
-</svg>
-</i>
-    <span class="mdc-chip__checkmark" >
-      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-      </svg>
-    </span>
-    <span role="gridcell">
-      <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
-        <span class="mdc-chip__text"> Roundabouts</span>
-      </span>
-    </span>
-  </div>
-  <div class="mdc-chip" id="highways" role="row">
-    <div class="mdc-chip__ripple"></div>
-    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">speed</i>
-    <span class="mdc-chip__checkmark" >
-      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-      </svg>
-    </span>
-    <span role="gridcell">
-      <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
-        <span class="mdc-chip__text">Highways</span>
-      </span>
-    </span>
-  </div>
-  <div class="mdc-chip" id="city" role="row">
-    <div class="mdc-chip__ripple"></div>
-    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">traffic</i>
-    <span class="mdc-chip__checkmark" >
-      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-      </svg>
-    </span>
-    <span role="gridcell">
-      <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
-        <span class="mdc-chip__text">City Driving</span>
-      </span>
-    </span>
-  </div>
-  <div class="mdc-chip" id="winter" role="row">
-    <div class="mdc-chip__ripple"></div>
-    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">ac_unit</i>
-    <span class="mdc-chip__checkmark" >
-      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
-              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
-      </svg>
-    </span>
-    <span role="gridcell">
-      <span role="checkbox" tabindex="0" aria-checked="false" class="mdc-chip__primary-action">
-        <span class="mdc-chip__text">Winter Driving</span>
-      </span>
-    </span>
-  </div>
 </div><br>
 <label class="mdc-text-field mdc-text-field--outlined" id="timeComment">
   <input type="text" class="mdc-text-field__input">
@@ -393,6 +316,20 @@
    --></h2>
       <div class="mdc-dialog__content" id="my-dialog-content">
         <ul class="mdc-list mdc-list--two-line mdc-list--icon-list">
+          <li class="mdc-list-item" tabindex="0" onclick="toggleAlwaysNight()">
+            <span class="mdc-list-item__ripple"></span>
+            <span class="mdc-list-item__text">
+              <span class="mdc-list-item__primary-text">Night Theme Always On</span>
+              <span class="mdc-list-item__secondary-text">Always use a dark night theme</span>
+            </span>
+            <div class="mdc-switch settings-switch">
+              <div class="mdc-switch__track"></div>
+              <div class="mdc-switch__thumb-underlay">
+                <div class="mdc-switch__thumb"></div>
+                <input type="checkbox" id="dark-mode-switch" class="mdc-switch__native-control" role="switch" aria-checked="false">
+              </div>
+            </div>
+          </li>
           <a class="mdc-list-item" tabindex="0" onclick="exportData(this)">
             <span class="mdc-list-item__ripple"></span>
             <span class="mdc-list-item__text">
@@ -432,13 +369,9 @@
         </ul>
       </div>
       <div class="mdc-dialog__actions">
-        <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="close">
-          <div class="mdc-button__ripple"></div>
-          <span class="mdc-button__label">Cancel</span>
-        </button>
         <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="accept">
           <div class="mdc-button__ripple"></div>
-          <span class="mdc-button__label">OK</span>
+          <span class="mdc-button__label">Close</span>
         </button>
       </div>
     </div>
@@ -453,6 +386,12 @@
     <div class="mdc-snackbar__label"
          role="status"
          aria-live="polite">
+    </div>
+    <div class="mdc-snackbar__actions">
+      <a type="button" class="mdc-button mdc-snackbar__action mdc-button--raised" hidden href="about.html#help">
+        <div class="mdc-button__ripple"></div>
+        <span class="mdc-button__label">Help</span>
+      </a>
     </div>
   </div>
 </div>
@@ -491,5 +430,10 @@ if ('serviceWorker' in navigator) {
       console.log('ServiceWorker registration failed: ', err);
     });
   });
+}
+const darkModeSwitch = new mdc.switchControl.MDCSwitch(document.getElementById('settings').querySelector('.settings-switch'));
+if(localStorage.getItem('darkMode') == "true"){
+  darkModeSwitch.checked = true
+  document.querySelector('html').classList.add("night")
 }
 </script>
