@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "isakw2004.drivelog",
+                   "sha256_cert_fingerprints": ["EF:25:F5:9D:A2:F5:56:C8:57:48:C6:AB:8C:D3:0E:E4:26:63:0C:F9:68:89:A2:99:06:A9:7A:C2:65:96:59:6A"] }
+    }]
