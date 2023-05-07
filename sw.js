@@ -3,7 +3,7 @@ var urlsToCache = [
   'index.html',
   'manifest.json',
   'assets/style.css',
-  'assets/states.js',
+  'assets/setup.js',
   'assets/ready.svg',
   'assets/material.js',
   'assets/material.css',
@@ -11,8 +11,6 @@ var urlsToCache = [
   'assets/index.js',
   'assets/icons.woff2',
   'assets/hex.svg',
-  'assets/bootstrapcustom.min.css',
-  'assets/icons/roundabout.svg',
   'assets/nosleep.js'
 ];
 

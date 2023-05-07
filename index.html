@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -6,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="Driving Log">
-  <meta name="theme-color" content="#344955"/>
+  <meta name="theme-color" content="#000"/>
   <title>Driving Log</title>
   <link href="assets/material.css" rel="stylesheet">
   <script type="text/javascript" src="assets/material.js"></script>
@@ -15,301 +16,322 @@
   <script type="text/javascript" src="assets/jquery.js"></script>
   <script type="text/javascript" src="assets/index.js"></script>
   <link rel="apple-touch-icon" href="assets/icons/icon_ios_512.png">
-  <link href="splashscreens/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-<link href="splashscreens/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-<link href="splashscreens/iphoneplus_splash.png" media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
-<link href="splashscreens/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
-<link href="splashscreens/iphonexr_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-<link href="splashscreens/iphonexsmax_splash.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" rel="apple-touch-startup-image" />
-<link href="splashscreens/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-<link href="splashscreens/ipadpro1_splash.png" media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-<link href="splashscreens/ipadpro3_splash.png" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
-<link href="splashscreens/ipadpro2_splash.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image" />
+  <link href="splashscreens/iphone5_splash.png"
+    media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/iphone6_splash.png"
+    media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/iphoneplus_splash.png"
+    media="(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/iphonex_splash.png"
+    media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/iphonexr_splash.png"
+    media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/iphonexsmax_splash.png"
+    media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/ipad_splash.png"
+    media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/ipadpro1_splash.png"
+    media="(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/ipadpro3_splash.png"
+    media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
+  <link href="splashscreens/ipadpro2_splash.png"
+    media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)"
+    rel="apple-touch-startup-image" />
 
-</body>
+  </body>
 </head>
 <html>
 <header class="mdc-top-app-bar bottom-app-bar">
   <div class="mdc-top-app-bar__row">
     <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
       <div class="mdc-menu-surface--anchor" id="share">
-      <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" onclick="openShareMenu()">share</button>
-      <div class="mdc-menu mdc-menu-surface">
+        <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
+          onclick="openShareMenu()">share</button>
+        <div class="mdc-menu mdc-menu-surface">
           <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
-        <a class="mdc-list-item" role="menuitem" onclick="exportData(this)">
-          <span class="mdc-list-item__ripple"></span>
-          <span class="mdc-list-item__text">Export Data</span>
-        </a>
-        <li class="mdc-list-item" role="menuitem" onclick="jsShare()" hidden>
-          <span class="mdc-list-item__ripple"></span>
-          <span class="mdc-list-item__text">Share</span>
-        </li>
-      </ul>
+            <a class="mdc-list-item" role="menuitem" onclick="exportData(this)">
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-list-item__text">Export Data</span>
+            </a>
+            <li class="mdc-list-item" role="menuitem" onclick="jsShare()" hidden>
+              <span class="mdc-list-item__ripple"></span>
+              <span class="mdc-list-item__text">Share</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" hidden id="closeButton" onclick="discardTimer()">close</button>
+      <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" hidden id="closeButton"
+        onclick="discardTimer()">close</button>
     </section>
     <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-      <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Settings" onclick="settings.open()">settings</button>
-      <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Print" id="printButton" onclick="printLog()">print</button>
-      <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Show Speed" id="speedButton" onclick="speedometer.start()" hidden>speed</button>
+      <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Settings"
+        onclick="settings.open()">settings</button>
+      <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Print" id="printButton"
+        onclick="printLog()">print</button>
+      <button class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Show Speed"
+        id="speedButton" onclick="startSpeedometer()" hidden>speed</button>
     </section>
   </div>
 </header>
-  <button class="mdc-fab app-bar-fab standard-fab" id="standardFab" onclick="view.start()">
+<button class="mdc-fab app-bar-fab standard-fab" id="standardFab" onclick="view.start()">
   <div class="mdc-fab__ripple"></div>
   <span class="mdc-fab__icon material-icons" id="fabIcon">timer</span>
-    </button>
-    <button class="app-bar-fab mdc-fab stop-fab mdc-fab--exited" id="stopFab" onclick="timer.stop()">
-    <svg viewBox="0, 0, 75, 75">
+</button>
+<button class="app-bar-fab mdc-fab stop-fab mdc-fab--exited" id="stopFab" onclick="timer.stop()">
+  <svg viewBox="0, 0, 75, 75">
     <g>
-      <path d="M51.339,0 L23.672,0 C22.589,0 21.505,0.458 20.755,1.208 L1.214,20.75 C0.464,21.5 0.005,22.583 0.005,23.667 L0.005,51.292 C0.005,52.417 0.464,53.458 1.214,54.25 L20.714,73.75 C21.505,74.542 22.589,75 23.672,75 L51.297,75 C52.422,75 53.464,74.542 54.255,73.792 L73.755,54.292 C74.547,53.5 74.964,52.458 74.964,51.333 L74.964,23.667 C74.964,22.542 74.505,21.5 73.755,20.708 L54.255,1.208 C53.505,0.458 52.422,0 51.339,0 z" fill="#FF4428"/>
+      <path
+        d="M51.339,0 L23.672,0 C22.589,0 21.505,0.458 20.755,1.208 L1.214,20.75 C0.464,21.5 0.005,22.583 0.005,23.667 L0.005,51.292 C0.005,52.417 0.464,53.458 1.214,54.25 L20.714,73.75 C21.505,74.542 22.589,75 23.672,75 L51.297,75 C52.422,75 53.464,74.542 54.255,73.792 L73.755,54.292 C74.547,53.5 74.964,52.458 74.964,51.333 L74.964,23.667 C74.964,22.542 74.505,21.5 73.755,20.708 L54.255,1.208 C53.505,0.458 52.422,0 51.339,0 z"
+        fill="#FF4428" />
     </g>
-</svg>
-<span class="stop-fab__icon material-icons">stop</span>
+  </svg>
+  <span class="stop-fab__icon material-icons">stop</span>
 
 </button>
+
 <body>
 
-<div class="container text-center" id="homeContainer">
-<h1 class="welcome" id="welcome-text"></h1>
-<div class="mdc-card-columns text-center">
-<div class="mdc-card">
-    <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
-    <h4><i class="material-icons">nights_stay</i><br> Night Driving</h4>
-    <p id="night-card-text" style="margin-bottom: 0;">...</p>
-    <small class="text-muted">Click to Add</small>
-    </div>
-    <form style="display:none; padding: 16px; padding-top:0;" id="nightForm" class="expandable">
-      <hr style="margin-top:0;">
-      <h5>Adding Night Hours</h5>
-      <div class="hourrow">
-        <label class="mdc-text-field mdc-text-field--filled">
-          <span class="mdc-text-field__ripple"></span>
-          <input class="mdc-text-field__input" type="number" min="0">
-          <span class="mdc-floating-label">Hours</span>
-          <span class="mdc-line-ripple"></span>
-        </label>
-        <label class="mdc-text-field mdc-text-field--filled">
-          <span class="mdc-text-field__ripple"></span>
-          <input class="mdc-text-field__input" type="number" min="0" max="59">
-          <span class="mdc-floating-label" id="my-label-id">Minutes</span>
-          <span class="mdc-line-ripple"></span>
-        </label>
+  <div class="tab container" id="home-tab">
+    <h1 class="welcome" id="welcome-text"></h1>
+    <div class="mdc-card-columns text-center">
+      <div class="mdc-card">
+        <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
+          <h4><i class="material-icons">nights_stay</i><br> Night Driving</h4>
+          <p id="night-card-text" style="margin-bottom: 0;">...</p>
+          <small class="text-muted">Click to Add</small>
+        </div>
+        <form style="display:none; padding: 16px; padding-top:0;" id="nightForm" class="expandable">
+          <hr style="margin-top:0;">
+          <h5>Adding Night Hours</h5>
+          <div class="hourrow">
+            <label class="mdc-text-field mdc-text-field--filled">
+              <span class="mdc-text-field__ripple"></span>
+              <input class="mdc-text-field__input" type="number" min="0">
+              <span class="mdc-floating-label">Hours</span>
+              <span class="mdc-line-ripple"></span>
+            </label>
+            <label class="mdc-text-field mdc-text-field--filled">
+              <span class="mdc-text-field__ripple"></span>
+              <input class="mdc-text-field__input" type="number" min="0" max="59">
+              <span class="mdc-floating-label" id="my-label-id">Minutes</span>
+              <span class="mdc-line-ripple"></span>
+            </label>
+          </div>
+          <label class="mdc-text-field mdc-text-field--filled" id="comment">
+            <span class="mdc-text-field__ripple"></span>
+            <input class="mdc-text-field__input" type="text">
+            <span class="mdc-floating-label" id="my-label-id">Comment</span>
+            <span class="mdc-line-ripple"></span>
+          </label>
+          <button class="mdc-button mdc-button--outlined" type="button" onclick="manualSave(this.parentElement, true)">
+            <div class="mdc-button__ripple"></div>
+            <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
+            <span class="mdc-button__label">Add to Log</span>
+          </button>
+          <small class="message"></small>
+        </form>
       </div>
-      <label class="mdc-text-field mdc-text-field--filled" id="comment">
-      <span class="mdc-text-field__ripple"></span>
-      <input class="mdc-text-field__input" type="text">
-      <span class="mdc-floating-label" id="my-label-id">Comment</span>
-      <span class="mdc-line-ripple"></span>
-      </label>
-      <button class="mdc-button mdc-button--outlined" type="button" onclick="manualSave(this.parentElement, true)">
-        <div class="mdc-button__ripple"></div>
-        <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
-        <span class="mdc-button__label">Add to Log</span>
-      </button>
-      <small class="message"></small>
-    </form>
-</div>
-<div class="mdc-card">
-    <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
-    <h4><i class="material-icons">wb_sunny</i><br> Total Driving</h4>
-    <p id="general-card-text" style="margin-bottom: 0;">Loading...</p>
-    <small class="text-muted">Click to Add</small>
-    </div>
-    <form style="display:none; padding: 16px; padding-top:0;" id="dayForm" class="expandable">
-      <hr style="margin-top:0;">
-      <h5>Adding Total Hours</h5>
-      <div class="hourrow">
-        <label class="mdc-text-field mdc-text-field--filled">
-          <span class="mdc-text-field__ripple"></span>
-          <input class="mdc-text-field__input" type="number" min="0">
-          <span class="mdc-floating-label">Hours</span>
-          <span class="mdc-line-ripple"></span>
-        </label><label class="mdc-text-field mdc-text-field--filled">
-          <span class="mdc-text-field__ripple"></span>
-          <input class="mdc-text-field__input" type="number" min="0" max="59">
-          <span class="mdc-floating-label" id="my-label-id">Minutes</span>
-          <span class="mdc-line-ripple"></span>
-        </label>
+      <div class="mdc-card">
+        <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
+          <h4><i class="material-icons">wb_sunny</i><br> Total Driving</h4>
+          <p id="general-card-text" style="margin-bottom: 0;">Loading...</p>
+          <small class="text-muted">Click to Add</small>
+        </div>
+        <form style="display:none; padding: 16px; padding-top:0;" id="dayForm" class="expandable">
+          <hr style="margin-top:0;">
+          <h5>Adding Total Hours</h5>
+          <div class="hourrow">
+            <label class="mdc-text-field mdc-text-field--filled">
+              <span class="mdc-text-field__ripple"></span>
+              <input class="mdc-text-field__input" type="number" min="0">
+              <span class="mdc-floating-label">Hours</span>
+              <span class="mdc-line-ripple"></span>
+            </label><label class="mdc-text-field mdc-text-field--filled">
+              <span class="mdc-text-field__ripple"></span>
+              <input class="mdc-text-field__input" type="number" min="0" max="59">
+              <span class="mdc-floating-label" id="my-label-id">Minutes</span>
+              <span class="mdc-line-ripple"></span>
+            </label>
+          </div>
+          <label class="mdc-text-field mdc-text-field--filled" id="comment">
+            <span class="mdc-text-field__ripple"></span>
+            <input class="mdc-text-field__input" type="text">
+            <span class="mdc-floating-label" id="my-label-id">Comment</span>
+            <span class="mdc-line-ripple"></span>
+          </label>
+          <button class="mdc-button mdc-button--outlined" type="button" onclick="manualSave(this.parentElement, false)">
+            <div class="mdc-button__ripple"></div>
+            <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
+            <span class="mdc-button__label">Add to Log</span>
+          </button>
+          <small class="message"></small>
+        </form>
       </div>
-      <label class="mdc-text-field mdc-text-field--filled" id="comment">
-      <span class="mdc-text-field__ripple"></span>
-      <input class="mdc-text-field__input" type="text">
-      <span class="mdc-floating-label" id="my-label-id">Comment</span>
-      <span class="mdc-line-ripple"></span>
-      </label>
-      <button class="mdc-button mdc-button--outlined" type="button" onclick="manualSave(this.parentElement, false)">
-        <div class="mdc-button__ripple"></div>
-        <i class="material-icons mdc-button__icon" aria-hidden="true">save</i>
-        <span class="mdc-button__label">Add to Log</span>
-      </button>
-      <small class="message"></small>
-    </form>
-</div>
-<div class="mdc-card">
-  <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
-  <h4><i class="material-icons">auto_awesome</i><br> Skills</h4>
-  <p style="margin-bottom: 0;" id="skill-card-text">Loading...</p>
-  <small class="text-muted">Click for More Info</small>
-  </div>
-  <ul style="display:none; padding: 16px; padding-top:0;" class="expandable mdc-list" id="skillList">
-    
-  </ul>
-</div>
-</div>
-<div class="mdc-data-table" id="printTable" hidden>
-  <div class="mdc-data-table__table-container">
-    <table class="mdc-data-table__table" aria-label="Printing Data...">
-      <thead>
-        <tr class="mdc-data-table__header-row">
-          <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Driving Time</th>
-          <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Date</th>
-          <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Night?</th>
-          <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader" scope="col">Skills Practiced</th>
-          <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Comment</th>
-        </tr>
-      </thead>
-      <tbody class="mdc-data-table__content" id="printTableContent">
-      </tbody>
-    </table>
-  </div>
-</div>
-</div>
-<div class="container text-center" hidden id="startContainer">
-  <img class="ready-hero" src="assets/ready.svg">
-  <h3>Ready to Drive?</h3>
-  <div class="mdc-chip-set mdc-chip-set--choice"  role="grid">
-  <div class="mdc-chip" role="row" id="day">
-  <div class="mdc-chip__ripple"></div>
-  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">wb_sunny</i>
-  <span role="gridcell">
-    <span role="button" tabindex="0" class="mdc-chip__primary-action">
-      <span class="mdc-chip__text">Day</span>
-    </span>
-  </span>
-</div>
-<div class="mdc-chip" role="row" id="night">
-  <div class="mdc-chip__ripple"></div>
-  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">nights_stay</i>
-  <span role="gridcell">
-    <span role="button" tabindex="0" class="mdc-chip__primary-action">
-      <span class="mdc-chip__text">Night</span>
-    </span>
-  </span>
-</div>
-  </div><br>
-</div>
-<div class="container text-center" hidden id="timerContainer"><br>
-  <h2>Currently Driving</h2>
-  <h1 class="time" id="timer">00:00:00</h1><br>
-  <div class="text-muted">
-  <i class="material-icons">info</i><br>
-  <i id="tip">...</i></div>
-  <div id="speedometer" hidden></div>
-</div>
-<div class="container text-center" hidden id="endContainer"><br>
-  <h2>Nice Job!</h2>
-  <h1 class="time" id="endTime">00:00:00</h1><hr>
-  <h5>What skills did you work on?</h5>
-  <div class="mdc-chip-set mdc-chip-set--filter" id="hazards" role="grid">
-</div><br>
-<label class="mdc-text-field mdc-text-field--outlined" id="timeComment">
-  <input type="text" class="mdc-text-field__input">
-  <span class="mdc-notched-outline">
-    <span class="mdc-notched-outline__leading"></span>
-    <span class="mdc-notched-outline__notch">
-      <span class="mdc-floating-label" >Add a Comment</span>
-    </span>
-    <span class="mdc-notched-outline__trailing"></span>
-  </span>
-</label>
-<p class="text-muted">Press <i class="material-icons align-bottom">save</i> to save, or <i class="material-icons align-bottom">close</i> to discard</p>
-</div>
-</div>
-<div id="importJSONWrapper">
-</div>
-<div class="container text-center" style="max-width: 700px;" id="onboardingContainer" hidden><br>
-  <h1 class="welcome" style="margin-bottom: 0px;">Hello.<p style="font-size:1rem">Welcome to Drive Timer</p></h1>
-  <div style="display:flex">
-    <div style="display: inline-block; width: 100%">
-      <p class="intro-icon">thumb_up</p>
-      <h4>Simple</h4>
-    </div>
-    <div style="display: inline-block; width: 100%">
-      <p class="intro-icon">get_app</p>
-      <h4>Installable</h4>
-    </div>
-    <div style="display: inline-block; width: 100%;">
-      <p class="intro-icon">print</p>
-      <h4>Printable</h4>
-    </div>
-  </div>
-  <a class="mdc-button" href="about.html">
-    <div class="mdc-button__ripple"></div>
-    <span class="mdc-button__label">Learn More</span>
-  </a><br><br>
-  <p class="text-muted">Put in your required driving hours</p>
-  <div class="hourrow">
-    <label class="mdc-text-field mdc-text-field--filled hour-input">
-      <span class="mdc-text-field__ripple"></span>
-      <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id">
-      <span class="mdc-floating-label" id="my-label-id">Total Hours</span>
-      <span class="mdc-line-ripple"></span>
-    </label>
-    <label class="mdc-text-field mdc-text-field--filled hour-input">
-      <span class="mdc-text-field__ripple"></span>
-      <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id">
-      <span class="mdc-floating-label" id="my-label-id">Night Hours</span>
-      <span class="mdc-line-ripple"></span>
-    </label>
-   </div>
- <p class="text-muted">or, if you live in the US,</p>
- <div class="mdc-select mdc-select--filled" id="select">
-  <div class="mdc-select__anchor"
-       role="button"
-       aria-haspopup="listbox"
-       aria-expanded="false"
-       aria-labelledby="demo-label demo-selected-text">
-    <span class="mdc-select__ripple"></span>
-    <span class="mdc-floating-label">Pick a State</span>
-    <span style="text-align:left;" class="mdc-select__selected-text"></span>
-    <span class="mdc-select__dropdown-icon">
-      <svg
-          class="mdc-select__dropdown-icon-graphic"
-          viewBox="7 10 10 5" focusable="false">
-        <polygon
-            class="mdc-select__dropdown-icon-inactive"
-            stroke="none"
-            fill-rule="evenodd"
-            points="7 10 12 15 17 10">
-        </polygon>
-        <polygon
-            class="mdc-select__dropdown-icon-active"
-            stroke="none"
-            fill-rule="evenodd"
-            points="7 15 12 10 17 15">
-        </polygon>
-      </svg>
-    </span>
-    <span class="mdc-line-ripple"></span>
-  </div>
+      <div class="mdc-card">
+        <div class="mdc-card-content mdc-card__primary-action" onclick="expandCard(this.parentElement)">
+          <h4><i class="material-icons">auto_awesome</i><br> Skills</h4>
+          <p style="margin-bottom: 0;" id="skill-card-text">Loading...</p>
+          <small class="text-muted">Click for More Info</small>
+        </div>
+        <ul style="display:none; padding: 16px; padding-top:0;" class="expandable mdc-list" id="skillList">
 
-  <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth text-left">
-    <ul class="mdc-list" role="listbox" id="stateSelectList" aria-label="Pick your state">
-    </ul>
+        </ul>
+      </div>
+    </div>
+    <div class="mdc-data-table" id="printTable">
+      <div class="mdc-data-table__table-container">
+        <table class="mdc-data-table__table" aria-label="Printing Data...">
+          <thead>
+            <tr class="mdc-data-table__header-row">
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Driving Time</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Date</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">At Night</th>
+              <th class="mdc-data-table__header-cell mdc-data-table__header-cell--numeric" role="columnheader"
+                scope="col">Skills Practiced</th>
+              <th class="mdc-data-table__header-cell" role="columnheader" scope="col">Comment</th>
+            </tr>
+          </thead>
+          <tbody class="mdc-data-table__content" id="printTableContent">
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
-<p class="message" id="setupMessage"></p>
-<br>
-<small class="text-muted">To import existing data, <u style="cursor: pointer;" onclick="importData()">click here</u></small>
-</div>
+  <div class="container tab" hidden id="start-tab">
+    <img class="ready-hero" src="assets/ready.svg">
+    <h3>Ready to Drive?</h3>
+    <div class="mdc-chip-set mdc-chip-set--choice" role="grid">
+      <div class="mdc-chip" role="row" id="day">
+        <div class="mdc-chip__ripple"></div>
+        <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">wb_sunny</i>
+        <span role="gridcell">
+          <span role="button" tabindex="0" class="mdc-chip__primary-action">
+            <span class="mdc-chip__text">Day</span>
+          </span>
+        </span>
+      </div>
+      <div class="mdc-chip" role="row" id="night">
+        <div class="mdc-chip__ripple"></div>
+        <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">nights_stay</i>
+        <span role="gridcell">
+          <span role="button" tabindex="0" class="mdc-chip__primary-action">
+            <span class="mdc-chip__text">Night</span>
+          </span>
+        </span>
+      </div>
+    </div><br>
+  </div>
+  <div class="container tab" hidden id="timer-tab"><br>
+    <h2>Currently Driving</h2>
+    <h1 class="time" id="timer">00:00:00</h1><br>
+    <div class="text-muted">
+      <i class="material-icons">info</i><br>
+      <i id="tip">...</i>
+    </div>
+    <div id="speedometer" hidden></div>
+  </div>
+  <div class="container tab" hidden id="end-tab"><br>
+    <h2>Nice Job!</h2>
+    <h1 class="time" id="endTime">00:00:00</h1>
+    <hr>
+    <h5>What skills did you work on?</h5>
+    <div class="mdc-chip-set mdc-chip-set--filter" id="hazards" role="grid">
+    </div><br>
+    <label class="mdc-text-field mdc-text-field--outlined" id="timeComment">
+      <input type="text" class="mdc-text-field__input">
+      <span class="mdc-notched-outline">
+        <span class="mdc-notched-outline__leading"></span>
+        <span class="mdc-notched-outline__notch">
+          <span class="mdc-floating-label">Add a Comment</span>
+        </span>
+        <span class="mdc-notched-outline__trailing"></span>
+      </span>
+    </label>
+    <p class="text-muted">Press <i class="material-icons align-bottom">save</i> to save, or <i
+        class="material-icons align-bottom">close</i> to discard</p>
+  </div>
+  </div>
+  <div id="importJSONWrapper">
+  </div>
+  <div class="container tab" style="max-width: 700px;" id="onboard-tab" hidden><br>
+    <h1 class="welcome" style="margin-bottom: 0px;">Hello.<p style="font-size:1rem">Welcome to Drive Timer</p>
+    </h1>
+    <div style="display:flex">
+      <div style="display: inline-block; width: 100%">
+        <p class="intro-icon">thumb_up</p>
+        <h4>Simple</h4>
+      </div>
+      <div style="display: inline-block; width: 100%">
+        <p class="intro-icon">get_app</p>
+        <h4>Installable</h4>
+      </div>
+      <div style="display: inline-block; width: 100%;">
+        <p class="intro-icon">print</p>
+        <h4>Printable</h4>
+      </div>
+    </div>
+    <a class="mdc-button" href="about.html">
+      <div class="mdc-button__ripple"></div>
+      <span class="mdc-button__label">Learn More</span>
+    </a><br><br>
+    <p class="text-muted">Put in your required driving hours</p>
+    <div class="hourrow">
+      <label class="mdc-text-field mdc-text-field--filled hour-input">
+        <span class="mdc-text-field__ripple"></span>
+        <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id">
+        <span class="mdc-floating-label" id="my-label-id">Total Hours</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+      <label class="mdc-text-field mdc-text-field--filled hour-input">
+        <span class="mdc-text-field__ripple"></span>
+        <input class="mdc-text-field__input" type="number" aria-labelledby="my-label-id">
+        <span class="mdc-floating-label" id="my-label-id">Night Hours</span>
+        <span class="mdc-line-ripple"></span>
+      </label>
+    </div>
+    <p class="text-muted">or, if you live in the US,</p>
+    <div class="mdc-select mdc-select--filled" id="select">
+      <div class="mdc-select__anchor" role="button" aria-haspopup="listbox" aria-expanded="false"
+        aria-labelledby="demo-label demo-selected-text">
+        <span class="mdc-select__ripple"></span>
+        <span class="mdc-floating-label">Pick a State</span>
+        <span style="text-align:left;" class="mdc-select__selected-text"></span>
+        <span class="mdc-select__dropdown-icon">
+          <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5" focusable="false">
+            <polygon class="mdc-select__dropdown-icon-inactive" stroke="none" fill-rule="evenodd"
+              points="7 10 12 15 17 10">
+            </polygon>
+            <polygon class="mdc-select__dropdown-icon-active" stroke="none" fill-rule="evenodd"
+              points="7 15 12 10 17 15">
+            </polygon>
+          </svg>
+        </span>
+        <span class="mdc-line-ripple"></span>
+      </div>
+
+      <div class="mdc-select__menu mdc-menu mdc-menu-surface mdc-menu-surface--fullwidth text-left">
+        <ul class="mdc-list" role="listbox" id="stateSelectList" aria-label="Pick your state">
+        </ul>
+      </div>
+    </div>
+    <p class="message" id="setupMessage"></p>
+    <br>
+    <small class="text-muted">To import existing data, <u style="cursor: pointer;" onclick="importData()">click
+        here</u></small>
+  </div>
 </body>
 <div class="mdc-dialog" id="settings">
   <div class="mdc-dialog__container">
-    <div class="mdc-dialog__surface"
-      role="alertdialog"
-      aria-modal="true">
+    <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true">
       <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
       <h2 class="mdc-dialog__title" style="color:inherit;"><!--
      -->Settings<!--
@@ -326,7 +348,8 @@
               <div class="mdc-switch__track"></div>
               <div class="mdc-switch__thumb-underlay">
                 <div class="mdc-switch__thumb"></div>
-                <input type="checkbox" id="dark-mode-switch" class="mdc-switch__native-control" role="switch" aria-checked="false">
+                <input type="checkbox" id="dark-mode-switch" class="mdc-switch__native-control" role="switch"
+                  aria-checked="false">
               </div>
             </div>
           </li>
@@ -334,7 +357,8 @@
             <span class="mdc-list-item__ripple"></span>
             <span class="mdc-list-item__text">
               <span class="mdc-list-item__primary-text">Export your Data</span>
-              <span class="mdc-list-item__secondary-text">Use this before you clear your cookies or get a new device.</span>
+              <span class="mdc-list-item__secondary-text">Use this before you clear your cookies or get a new
+                device.</span>
             </span>
           </a>
           <li class="mdc-list-item" tabindex="0" onclick="setNewGoal()">
@@ -363,7 +387,7 @@
             <span class="mdc-list-item__ripple"></span>
             <span class="mdc-list-item__text">
               <span class="mdc-list-item__primary-text">Help</span>
-              <span class="mdc-list-item__secondary-text">Have issues? Give Feedback or get Answers</span>
+              <span class="mdc-list-item__secondary-text">Need some help? Read the FAQ or submit an issue.</span>
             </span>
           </a>
         </ul>
@@ -383,9 +407,7 @@
 </div>
 <div class="mdc-snackbar">
   <div class="mdc-snackbar__surface">
-    <div class="mdc-snackbar__label"
-         role="status"
-         aria-live="polite">
+    <div class="mdc-snackbar__label" role="status" aria-live="polite">
     </div>
     <div class="mdc-snackbar__actions">
       <a type="button" class="mdc-button mdc-snackbar__action mdc-button--raised" hidden href="about.html#help">
@@ -396,44 +418,55 @@
   </div>
 </div>
 <script>
-var selector = '.mdc-button, .mdc-card__primary-action, .mdc-fab';
-var ripples = [].map.call(document.querySelectorAll(selector), function(el) {
-  return new mdc.ripple.MDCRipple(el);
-});
-var menu = new mdc.menu.MDCMenu(document.querySelector('.mdc-menu'));
-var timeChips = new mdc.chips.MDCChipSet(document.querySelector('.mdc-chip-set'));
-var hazardChips = new mdc.chips.MDCChipSet(document.getElementById('hazards'));
-var comment= new mdc.textField.MDCTextField(document.getElementById('timeComment'))
-var settings = new mdc.dialog.MDCDialog(document.getElementById('settings'));
-var stateSelect = new mdc.select.MDCSelect(document.getElementById('select'));
-var setupInputs = [].map.call(document.querySelectorAll('.hour-input'), function(el) {
-  return new mdc.textField.MDCTextField(el);
-});
-var manualFields = {"night": [].map.call(document.getElementById('nightForm').querySelectorAll('.mdc-text-field'), function(el) {
-  return new mdc.textField.MDCTextField(el);
-}), "day": [].map.call(document.getElementById('dayForm').querySelectorAll('.mdc-text-field'), function(el) {
-  return new mdc.textField.MDCTextField(el);
-})}
-var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar'));
-//service worker for Progressive Web App mode
-window.addEventListener('beforeinstallprompt', (event) => {
-  console.log('👍', 'beforeinstallprompt', event);
-  window.deferredPrompt = event;
-});
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('sw.js').then(function(registration) {
-      // Registration was successful
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      // registration failed D:
-      console.log('ServiceWorker registration failed: ', err);
-    });
+  var selector = '.mdc-button, .mdc-card__primary-action, .mdc-fab';
+  var ripples = [].map.call(document.querySelectorAll(selector), function (el) {
+    return new mdc.ripple.MDCRipple(el);
   });
-}
-const darkModeSwitch = new mdc.switchControl.MDCSwitch(document.getElementById('settings').querySelector('.settings-switch'));
-if(localStorage.getItem('darkMode') == "true"){
-  darkModeSwitch.checked = true
-  document.querySelector('html').classList.add("night")
-}
+  var menu = new mdc.menu.MDCMenu(document.querySelector('.mdc-menu'));
+  var timeChips = new mdc.chips.MDCChipSet(document.querySelector('.mdc-chip-set'));
+  var hazardChips = new mdc.chips.MDCChipSet(document.getElementById('hazards'));
+  var comment = new mdc.textField.MDCTextField(document.getElementById('timeComment'))
+  var settings = new mdc.dialog.MDCDialog(document.getElementById('settings'));
+  var stateSelect = new mdc.select.MDCSelect(document.getElementById('select'));
+  var setupInputs = [].map.call(document.querySelectorAll('.hour-input'), function (el) {
+    return new mdc.textField.MDCTextField(el);
+  });
+  var manualFields = {
+    "night": [].map.call(document.getElementById('nightForm').querySelectorAll('.mdc-text-field'), function (el) {
+      return new mdc.textField.MDCTextField(el);
+    }), "day": [].map.call(document.getElementById('dayForm').querySelectorAll('.mdc-text-field'), function (el) {
+      return new mdc.textField.MDCTextField(el);
+    })
+  }
+  var snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar'));
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').then(function (registration) {
+      }, function (err) {
+        console.log({ errMessage: 'ServiceWorker registration failed: ', error: err });
+      });
+    });
+  }
+  const darkModeSwitch = new mdc.switchControl.MDCSwitch(document.getElementById('settings').querySelector('.settings-switch'));
+  if (localStorage.getItem('darkMode') == "true") {
+    darkModeSwitch.checked = true
+    document.querySelector('html').classList.add("night")
+  }
+  var fabIcon = document.getElementById('fabIcon')
+  var standardFab = document.getElementById('standardFab')
+      if (localStorage.getItem('setUp') == null) {
+        view.showOnboarding()
+    } else {
+        homeData()
+    }
+    if (localStorage.getItem("timerStartTime") != null) {
+        timeStarted = new Date(localStorage.getItem("timerStartTime"))
+        currentMS = (Date.parse((new Date).toUTCString()) - Date.parse(timeStarted.toUTCString()))
+        view.timer((localStorage.getItem('timerNight') === "true"), true)
+    }
+    if (InstallPrompt.isIOS()) {
+        let installPrompt = new InstallPrompt();
+        installPrompt.show(true);
+    }
+    _generateSkillChips()
 </script>

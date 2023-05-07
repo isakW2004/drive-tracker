@@ -34,6 +34,11 @@
     margin: 5% auto;
     margin-bottom: 0;
 }
+@media only screen and (max-width:599px){
+  .app-bar-fab{
+    bottom:28px;
+  }
+}
 .mdc-fab__ripple{
     border-radius:8px !important;
 }
@@ -58,11 +63,13 @@ html.night{
     --dark-theme-text-input: #313131;
     --mdc-theme-on-surface: white;
     --dark-theme-input-color: white;
+    --mdc-theme-text-icon-on-background:white;
+    --mdc-theme-text-secondary-on-background:white;
 }
 .mdc-list-item{
   color: var(--mdc-theme-on-surface, inherit)!important;
 }
-html.night .container, html.night body{
+html.night body{
     background-color:var(--mdc-theme-background);
     color:white;
 }
@@ -140,6 +147,9 @@ main{
     position: fixed;
     color:white;
 }
+.tab{
+  text-align: center;
+}
 .stop-fab{
     background: none !important;
     border-radius: 0 !important;
@@ -147,27 +157,27 @@ main{
     height: 60px;
     box-shadow: none;
 }
-.container.disappearing{
+.tab--hiding{
     animation-name: disappear;
-    animation-duration: 0.2s;
+    animation-duration: 0.3s;
     filter:opacity(0);
-    z-index: -1;
     left: 0;
     right: 0;
+    top:0;
     position: fixed;
     margin-bottom: 0
 }
 @keyframes disappear{
-    from{transform: scale(1); filter: opacity(100%)}
-    to{transform: scale(0.7); filter: opacity(0)}
+    from{transform: scale(1); filter:opacity(100%);}
+    to{transform: scale(0.7) translateY(-50vh);}
 }
-.container.appearing{
+.tab--appearing{
     animation-name: appear;
     animation-duration: 0.3s;
     z-index: 1;
 }
 @keyframes appear{
-    from{transform: scale(0.7) translateY(100vh);}
+    from{transform: scale(0.7) translateY(50vh);}
     to{transform: scale(1) translateY(-0);}
 }
 .ready-hero{
@@ -382,7 +392,7 @@ select{
         margin: auto;
     }
     #printTable{
-        position: absolute;
+        position: fixed;
         left: 0;
         top:0;
     }
@@ -393,9 +403,12 @@ select{
       overflow: visible;
       width: 100%;
     }
+    .mdc-snackbar{
+      display: none !important;
+    }
 }
 
-/* Below is code from Twitter's Bootstrap*/
+/* Below are styles from Twitter's Bootstrap*/
 
 *,
 *::before,
@@ -589,6 +602,9 @@ small,
 .align-bottom{
   vertical-align: sub !important;
 }
+
+
+
 #speed{
   font-size: 6rem;
   font-weight: bold;
@@ -600,4 +616,10 @@ small,
 .settings-switch{
   position: absolute;
   right: 20px;
+}
+.mdc-list-item__text{
+  text-align: start;
+}
+.mdc-card{
+  user-select: none;
 }
