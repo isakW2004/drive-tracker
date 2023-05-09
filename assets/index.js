@@ -448,15 +448,15 @@ class Speedometer {
         if (navigator.language.split('-')[1] == "US") {
             context.currentUnit = "mph";
         }
-        context.root.innerHTML = "<hr><h4>Speedometer</h4><p class='text-muted'>Speed is approximate</p><h1 id='speed'>...</h1><h5>" + this.currentUnit + "</h5><span><small><u onclick='speedometer.switchUnits(this)'>Switch to " + ((this.currentUnit == "mph") ? "km/h" : "mph") + "</u></small></span>";
+        context.root.innerHTML = "<hr><h4>Speedometer</h4><p class='text-muted'>Speed is approximate</p><h1 id='speed'>...</h1><h5>" + this.currentUnit + "</h5><span><small><u onclick='speedometerInstance.switchUnits(this)'>Switch to " + ((this.currentUnit == "mph") ? "km/h" : "mph") + "</u></small></span>";
         context.root.hidden = false;
         context.speedWatch = navigator.geolocation.watchPosition(context._update, null, OPTIONS);
         document.getElementById('speedButton').onclick = () => context.stop(context);
-        if (!context.noSleepLoaded) {
+        if (!Speedometer.noSleepLoaded) {
             $.getScript("assets/nosleep.js", function () {
                 context.noSleep = new NoSleep();
                 context.noSleep.enable();
-                context.noSleepLoaded = true;
+                Speedometer.noSleepLoaded = true;
             });
         } else {
             context.noSleep.enable();
@@ -481,9 +481,9 @@ class Speedometer {
     };
     started = false;
     switchUnits(text) {
-        currentUnit = ((currentUnit == "mph") ? "kmh" : "mph");
-        document.getElementById('speedometer').querySelector('h5').innerHTML = currentUnit;
-        text.innerHTML = "Switch to " + ((currentUnit == "mph") ? "km/h" : "mph");
+        this.currentUnit = ((this.currentUnit == "mph") ? "kmh" : "mph");
+        document.getElementById('speedometer').querySelector('h5').innerHTML = this.currentUnit;
+        text.innerHTML = "Switch to " + ((this.currentUnit == "mph") ? "km/h" : "mph");
         document.getElementById('speed').innerHTML = "...";
     }
 }

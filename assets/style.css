@@ -1,6 +1,7 @@
 .bottom-app-bar{
     position: fixed;
     bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom);
 }
 @font-face {
     font-family: 'Material Icons';
@@ -28,6 +29,7 @@
 .app-bar-fab{
     position: fixed;
     bottom: 35px;
+    bottom: calc(env(safe-area-inset-bottom) + 35px);
     z-index: 4;
     left: 0;
     right:0;
@@ -37,6 +39,7 @@
 @media only screen and (max-width:599px){
   .app-bar-fab{
     bottom:28px;
+    bottom: calc(env(safe-area-inset-bottom) + 28px);
   }
 }
 .mdc-fab__ripple{
