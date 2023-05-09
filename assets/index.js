@@ -448,7 +448,7 @@ class Speedometer {
         if (navigator.language.split('-')[1] == "US") {
             context.currentUnit = "mph";
         }
-        context.root.innerHTML = "<hr><h4>Speedometer</h4><p class='text-muted'>Speed is approximate</p><h1 id='speed'>...</h1><h5>" + this.currentUnit + "</h5><span><small><u onclick='speedometerInstance.switchUnits(this)'>Switch to " + ((this.currentUnit == "mph") ? "km/h" : "mph") + "</u></small></span>";
+        context.root.innerHTML = '<hr><h4>Speedometer</h4><p class=\'text-muted\'>Speed is approximate</p><h1 id=\'speed\'>...</h1><h5>' + this.currentUnit + '</h5><button class=\'mdc-button\' onclick=\'speedometerInstance.switchUnits(this)\'><span class=\'mdc-button__ripple\'></span><span class=\'mdc-button__text\'>Switch to ' + ((this.currentUnit == "mph") ? "km/h" : "mph") + '</span></button>';
         context.root.hidden = false;
         context.speedWatch = navigator.geolocation.watchPosition(context._update, null, OPTIONS);
         document.getElementById('speedButton').onclick = () => context.stop(context);
@@ -457,6 +457,14 @@ class Speedometer {
                 context.noSleep = new NoSleep();
                 context.noSleep.enable();
                 Speedometer.noSleepLoaded = true;
+                var noSleepButton = document.createElement('button');
+                noSleepButton.innerHTML = '<span class=\'mdc-button__ripple\'></span><span class=\'mdc-button__text\'>Keep Screen On</span>';
+                noSleepButton.classList.value = 'mdc-button mdc-button--raised';
+                noSleepButton.onclick = function(){
+                    speedometerInstance.noSleep.enable();
+                    this.hidden = true;
+                }
+                speedometerInstance.root.appendChild(noSleepButton);
             });
         } else {
             context.noSleep.enable();
@@ -483,7 +491,7 @@ class Speedometer {
     switchUnits(text) {
         this.currentUnit = ((this.currentUnit == "mph") ? "kmh" : "mph");
         document.getElementById('speedometer').querySelector('h5').innerHTML = this.currentUnit;
-        text.innerHTML = "Switch to " + ((this.currentUnit == "mph") ? "km/h" : "mph");
+        text.querySelector('.mdc-button__text').innerText = "Switch to " + ((this.currentUnit == "mph") ? "km/h" : "mph");
         document.getElementById('speed').innerHTML = "...";
     }
 }
