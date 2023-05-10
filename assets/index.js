@@ -49,9 +49,7 @@ class TabManager {
         document.getElementById('speedButton').hidden = true;
         standardFab.classList.remove('mdc-fab--exited');
         fabIcon.innerHTML = 'save';
-        standardFab.onclick = function () {
-            timer.save();
-        };
+        standardFab.onclick = timer.save
         document.getElementById('stopFab').classList.add('mdc-fab--exited');
         comment.value = '';
     }
@@ -535,3 +533,10 @@ function startSpeedometer() {
     }
     speedometerInstance.start();
 }
+
+document.addEventListener("keypress", (e) =>{
+    if(e.key == "Enter"){
+        e.preventDefault();
+        document.querySelector(".mdc-fab:not(.mdc-fab--exited)").onclick();
+    }
+})

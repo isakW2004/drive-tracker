@@ -186,6 +186,7 @@ main{
 }
 .ready-hero{
     margin: 20px;
+    max-width:calc(100% - 40px);
 }
 .mdc-chip-set--choice .mdc-chip.mdc-chip--selected .mdc-chip__icon--leading{
     color: var(--mdc-theme-secondary)
@@ -204,7 +205,8 @@ main{
   box-shadow: none;
 }
 .time{
-    font-size: 75px;
+    font-size: 5rem;
+    font-size: min(5rem, 20vw);
     font-weight: bolder;
     width: 100%;
     color: var(--mdc-theme-secondary, #F9AA33)
